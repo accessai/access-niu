@@ -1,0 +1,3 @@
+data:
+  train: /home/majeed/data/gender/train
+  test: /home/majeed/data/gender/test
