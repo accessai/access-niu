@@ -13,4 +13,3 @@ train_generator = data.data_generator(config.get("data").get("train"), 224, 224)
 model.fit_generator(generator=train_generator, steps_per_epoch=888 / 32, epochs=5)
 
 persist.save_keras_model(model, config.get("project").get("path"))
-

@@ -1,7 +1,7 @@
 from access_niu.infer import load_model, parse
 
 
-class App(object):
+class NIUApp(object):
 
     def __init__(self, config):
         self.config = config
@@ -10,3 +10,6 @@ class App(object):
 
     def parse(self, data):
         return parse(self.model, data)
+
+    def train(self):
+        pass

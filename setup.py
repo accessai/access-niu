@@ -14,6 +14,8 @@ setup(
         'tensorflow==1.13.1',
         'pillow==6.0.0',
         'h5py==2.9.0',
-        'black'
+        'black',
+        'gunicorn==19.9.0',
+        'flask==1.0.2'
     ]
 )
