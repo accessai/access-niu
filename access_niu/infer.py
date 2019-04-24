@@ -12,16 +12,16 @@ def load_model(model_dir: str) -> [Model, dict]:
     :return: Keras model file
     """
 
-    with open(os.path.join(model_dir,'model.json')) as f:
+    with open(os.path.join(model_dir, "model.json")) as f:
         model = model_from_json(f.read())
 
-    weights_file = os.path.join(model_dir, 'model_weights.h5')
+    weights_file = os.path.join(model_dir, "model_weights.h5")
     model.load_weights(weights_file)
 
     # look at: https://github.com/keras-team/keras/issues/6462
     model._make_predict_function()
 
-    with open(os.path.join(model_dir, 'labels.yml')) as f:
+    with open(os.path.join(model_dir, "labels.yml")) as f:
         labels = yaml.safe_load(f)
 
     return model, labels

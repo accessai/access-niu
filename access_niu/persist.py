@@ -14,6 +14,5 @@ def save_keras_model(path, model, labels):
 
 def _save_labels(path, labels):
 
-    with open(os.path.join(path, 'labels.yml'), 'w') as f:
+    with open(os.path.join(path, "labels.yml"), "w") as f:
         yaml.safe_dump(labels, f)
-

@@ -8,7 +8,9 @@ class Component(object):
 
     def __init__(self, comp_config):
         self.comp_config = comp_config
-        self._is_enabled = comp_config.get('active') if comp_config.get('active') is not None else True
+        self._is_enabled = (
+            comp_config.get("active") if comp_config.get("active") is not None else True
+        )
 
     @abc.abstractmethod
     def name(self):

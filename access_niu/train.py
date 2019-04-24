@@ -8,7 +8,9 @@ with open("sample/sample_config.yml") as f:
 
 model = mobilenet_v2.get_model()
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["acc"])
-train_generator, labels, n_samples = data.data_generator(config.get("data").get("train"), 224, 224)
+train_generator, labels, n_samples = data.data_generator(
+    config.get("data").get("train"), 224, 224
+)
 
 model.fit_generator(generator=train_generator, steps_per_epoch=n_samples / 32, epochs=5)
 
