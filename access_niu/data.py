@@ -9,4 +9,6 @@ def data_generator(path, img_ht, img_wt, batch_size=32):
         path, target_size=(img_ht, img_wt), batch_size=batch_size, shuffle=True
     )
 
-    return generator
+    labels = {v:k for k,v in generator.class_indices}
+
+    return generator, labels , generator.n

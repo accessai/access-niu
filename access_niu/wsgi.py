@@ -17,8 +17,13 @@ def status():
 @flask_app.route("/parse", methods=['POST'])
 def parse():
     model = request.form['model']
-    data = request.form['data']
-    niu_app.parse(data)
+    data = request.files['data']
+    resp = niu_app.parse(data)
+    return jsonify(resp)
+
+
+if __name__ == '__main__':
+    flask_app.run(host='localhost', port=8000, debug=True)
 
 
 @flask_app.route("/train", methods=['POST'])
