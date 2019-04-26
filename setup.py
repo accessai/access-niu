@@ -16,6 +16,6 @@ setup(
         "h5py==2.9.0",
         "black",
         "gunicorn==19.9.0",
-        "flask==1.0.2",
+        "flask==1.0.2"
     ],
 )
