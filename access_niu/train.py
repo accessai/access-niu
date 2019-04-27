@@ -6,6 +6,16 @@ from access_niu import data, persist
 with open("sample/sample_config.yml") as f:
     config = yaml.safe_load(f)
 
+
+class Trainer(object):
+
+    def __init__(self, template):
+        self.template = template
+
+    def construct_model(self):
+        pass
+
+
 model = mobilenet_v2.get_model()
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["acc"])
 train_generator, labels, n_samples = data.data_generator(

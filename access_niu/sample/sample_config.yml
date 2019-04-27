@@ -4,4 +4,7 @@ data:
 project:
   path: output
 pipeline:
-  - featurizer
+    model:
+    - base_model: mobilenet
+    - intermediate_layer: 1 # no. of fully connected layers
+    - out_layer: classifier # output layer is a classifier
