@@ -8,14 +8,14 @@ from access_niu.infer import load_model, parse
 from access_niu.train import Trainer
 
 
-def _create_parser():
-    parser = argparse.ArgumentParser(description='access-niu parser')
-    parser.add_argument('--template',
-                        type=str,
-                        required=True,
-                        help='Project template')
-
-    return parser.parse_args()
+# def _create_parser():
+#     parser = argparse.ArgumentParser(description='access-niu parser')
+#     parser.add_argument('--template',
+#                         type=str,
+#                         required=True,
+#                         help='Project template')
+#
+#     return parser.parse_args()
 
 
 class NIUApp(object):
@@ -35,11 +35,13 @@ class NIUApp(object):
         pass
 
 
-if __name__ == '__main__':
-    args = _create_parser()
 
-    with open(args.get('template')) as f:
-        template = yaml.safe_load(f)
+
+# if __name__ == '__main__':
+#     args = _create_parser()
+#
+#     with open(args.get('template')) as f:
+#         template = yaml.safe_load(f)
 
 
 

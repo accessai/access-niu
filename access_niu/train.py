@@ -1,18 +1,32 @@
+import argparse
 import yaml
 
-from access_niu.classifiers import mobilenet_v2
+from access_niu.components.classifiers import mobilenet_v2
 from access_niu import data, persist
+from access_niu.pipeline import build_pipeline
 
-with open("sample/sample_config.yml") as f:
-    config = yaml.safe_load(f)
+
+def _create_parser():
+    parser = argparse.ArgumentParser(description='access-niu parser')
+    parser.add_argument('--template',
+                        type=str,
+                        required=True,
+                        help='Project template')
+
+    return parser.parse_args()
+
+
+# with open("sample/sample_template.yml") as f:
+#     config = yaml.safe_load(f)
 
 
 class Trainer(object):
 
     def __init__(self, template):
         self.template = template
+        self.pipeline = []
 
-    def construct_model(self):
+    def start_construction(self):
         pass
 
 
@@ -25,3 +39,13 @@ train_generator, labels, n_samples = data.data_generator(
 model.fit_generator(generator=train_generator, steps_per_epoch=n_samples / 32, epochs=5)
 
 persist.save_keras_model(config.get("project").get("path"), model, labels)
+
+
+if __name__ == '__main__':
+    args = _create_parser()
+
+    with open(args.get('template')) as f:
+        template = yaml.safe_load(f)
+
+    trainer = Trainer(template)
+    trainer.start_construction()
