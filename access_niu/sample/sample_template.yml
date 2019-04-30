@@ -4,16 +4,14 @@ data:
 project:
   path: output
 pipeline:
-  - model:
-    - input_layer:
-        - image_height: 224
-        - image_width: 224
-        - color_channels: 3
-    - pretrained_model:
-      - name: 'mobilenet_v2'
-      - include_top: false
-      - weights: 'imagenet'
-    - output_layer:  # output layer is a classifier / regressor
-        - type: classifier
-        - units: 2
-        - activation: "softmax"
+  - name: 'mobilenet_v2'
+    input_layer:
+      image_height: 224
+      image_width: 224
+      color_channels: 3
+    pretrained_model:
+      include_top: false
+      weights: 'imagenet'
+    output_layer:  # output layer is a classifier / regressor
+      units: 2
+      activation: "softmax"

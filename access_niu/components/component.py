@@ -73,9 +73,10 @@ class ComponentManager(object):
 
     def __init__(self):
         self.components = defaultdict(Component)
+        self._load_components()
 
-    def __next__(self, name):
-        return self.components.get('name')
+    def get(self, name):
+        return self.components.get(name)
 
     def _load_components(self):
         self.components['mobilenet'] = MobileNet
