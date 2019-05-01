@@ -35,13 +35,8 @@ class NIUApp(object):
         pass
 
 
-
-
 # if __name__ == '__main__':
 #     args = _create_parser()
 #
 #     with open(args.get('template')) as f:
 #         template = yaml.safe_load(f)
-
-
-

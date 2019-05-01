@@ -10,11 +10,8 @@ from access_niu.pipeline import build_pipeline
 
 
 def _create_parser():
-    parser = argparse.ArgumentParser(description='access-niu parser')
-    parser.add_argument('--template',
-                        type=str,
-                        required=True,
-                        help='Project template')
+    parser = argparse.ArgumentParser(description="access-niu parser")
+    parser.add_argument("--template", type=str, required=True, help="Project template")
 
     return parser.parse_args()
 
@@ -24,7 +21,6 @@ def _create_parser():
 
 
 class Trainer(object):
-
     def __init__(self, template):
         self.template = template
         self.pipeline = []
@@ -58,7 +54,7 @@ class Trainer(object):
 # persist.save_keras_model(config.get("project").get("path"), model, labels)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = _create_parser()
 
     with open(args.template) as f:
