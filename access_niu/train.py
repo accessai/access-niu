@@ -1,3 +1,4 @@
+from copy import deepcopy
 import argparse
 import yaml
 
@@ -28,8 +29,22 @@ class Trainer(object):
         self.template = template
         self.pipeline = []
 
-    def start_construction(self, components):
-        build_pipeline(components)
+    def start_construction(self):
+        self.pipeline = build_pipeline(template)
+
+    def train(self):
+
+        kwargs = self.template
+
+        for component in self.pipeline:
+            result = component.execute(**kwargs)
+            if result is not None:
+                kwargs.update(result)
+
+    def persist(self):
+        kwargs = self.template
+        for component in self.pipeline:
+            component.persist(**kwargs)
 
 
 # model = mobilenet_v2.get_model()
@@ -50,4 +65,6 @@ if __name__ == '__main__':
         template = yaml.safe_load(f)
 
     trainer = Trainer(template)
-    trainer.start_construction(template.get('pipeline'))
+    trainer.start_construction()
+    trainer.train()
+    trainer.persist()
