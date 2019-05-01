@@ -1,0 +1,24 @@
+data:
+  train: '/home/majeed/data/gender/train'
+  test: '/home/majeed/data/gender/test'
+project:
+  path: output
+batch_size: 24
+epochs: 2
+pipeline:
+  - name: 'mobilenet_v2'
+    input_layer:
+      image_height: 224
+      image_width: 224
+      color_channels: 3
+    pretrained_model:
+      include_top: false
+      weights: 'imagenet'
+    output_layer:  # output layer is a classifier / regressor
+      units: 2
+      activation: "softmax"
+    misc:
+      optimizer: 'adam'
+      loss: 'categorical_crossentropy'
+      metrics:
+        - 'acc'
