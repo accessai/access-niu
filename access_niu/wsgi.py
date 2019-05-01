@@ -23,7 +23,7 @@ def status():
 
 @flask_app.route("/parse", methods=["POST"])
 def parse():
-    model = request.form["model"]
+    # model = request.form["model"]
     data = request.files["data"]
     resp = niu_app.parse(data)
     return jsonify(resp)
