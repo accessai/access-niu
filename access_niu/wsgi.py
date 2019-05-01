@@ -1,13 +1,20 @@
-from flask import Flask, request, jsonify, make_response
+import os
+import argparse
+
+from flask import Flask, request, jsonify
 import yaml
 
 from access_niu.app import NIUApp
 
+
+def _create_parser():
+    parser = argparse.ArgumentParser(description="access-niu parser")
+    parser.add_argument("--project", type=str, required=True, help="Path to trained model.")
+
+    return parser.parse_args()
+
+
 flask_app = Flask(__name__)
-
-with open("sample/sample_config.yml") as f:
-    niu_app = NIUApp(yaml.safe_load(f))
-
 
 @flask_app.route("/")
 def status():
@@ -22,10 +29,16 @@ def parse():
     return jsonify(resp)
 
 
-if __name__ == "__main__":
-    flask_app.run(host="localhost", port=8000, debug=True)
-
-
 @flask_app.route("/train", methods=["POST"])
 def train():
     pass
+
+
+if __name__ == "__main__":
+    args = _create_parser()
+
+    with open(os.path.join(args.project, 'template.yml')) as f:
+        niu_app = NIUApp(yaml.safe_load(f))
+
+    flask_app.run(host="localhost", port=8000, debug=True)
+

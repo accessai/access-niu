@@ -1,4 +1,4 @@
-from keras.preprocessing import utils, image
+from keras.preprocessing import image
 
 
 def data_generator(path, img_ht, img_wt, batch_size=32):

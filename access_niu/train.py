@@ -1,10 +1,6 @@
-from copy import deepcopy
+import os
 import argparse
 import yaml
-
-from access_niu.components.classifiers import mobilenet_v2
-from access_niu import data, persist
-from access_niu.pipeline import build_pipeline
 
 from access_niu.pipeline import build_pipeline
 
@@ -16,19 +12,21 @@ def _create_parser():
     return parser.parse_args()
 
 
-# with open("sample/sample_template.yml") as f:
-#     config = yaml.safe_load(f)
-
-
 class Trainer(object):
+    """Trainer class
+    """
     def __init__(self, template):
         self.template = template
         self.pipeline = []
 
     def start_construction(self):
-        self.pipeline = build_pipeline(template)
+        """Builds the pipeline from given template.
+        """
+        self.pipeline = build_pipeline(self.template)
 
     def train(self):
+        """Trains the model using the constructed pipeline.
+        """
 
         kwargs = self.template
 
@@ -38,20 +36,19 @@ class Trainer(object):
                 kwargs.update(result)
 
     def persist(self):
+        """ Saves the trained model.
+        """
+
         kwargs = self.template
         for component in self.pipeline:
             component.persist(**kwargs)
 
+        keys_to_delete = [k for k in kwargs.keys() if 'generator' in k]
+        for k in keys_to_delete:
+                del kwargs[k]
 
-# model = mobilenet_v2.get_model()
-# model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["acc"])
-# train_generator, labels, n_samples = data.data_generator(
-#     config.get("data").get("train"), 224, 224
-# )
-#
-# model.fit_generator(generator=train_generator, steps_per_epoch=n_samples / 32, epochs=5)
-#
-# persist.save_keras_model(config.get("project").get("path"), model, labels)
+        with open(os.path.join(kwargs.get('project').get('path'), 'template.yml'), 'w') as f:
+            yaml.safe_dump(kwargs, f)
 
 
 if __name__ == "__main__":
