@@ -37,4 +37,4 @@ curl -X POST \
 
 
 ## References
-- This project is inspired from [RASA-NLU](https://github.com/RasaHQ/rasa) for training image based classifiers.
+- This project is inspired from [RASA-NLU](https://github.com/RasaHQ/rasa) project.
