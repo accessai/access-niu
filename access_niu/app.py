@@ -24,6 +24,6 @@ class NIUApp(object):
         pred_arr = parse(self.model, img)
         max_idx = np.argmax(pred_arr)
         return {self.labels.get(max_idx): np.float(pred_arr[0][max_idx])}
-
+        """Testing comment"""
     def train(self):
         pass
