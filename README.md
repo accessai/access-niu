@@ -24,7 +24,8 @@ pip install access-niu
 python -m access_niu.train --template sample/sample_template.yml
 ```
 Docker:
-```docker exec {CONTAINER} python -m access_niu.wsgi --project /access-ui/access_ui/sample_project
+```bash
+docker exec {CONTAINER} python -m access_niu.wsgi --project /access-ui/access_ui/sample_project
 ```
 
 ## Inference
@@ -38,10 +39,12 @@ curl -X POST \
   -F data=@image_leisure_0.jpg
 ```
 Docker:
-```docker exec {CONTAINER} python -m access_niu.train --template /access-niu/access_niu/sample/sample_template.yml
+```bash
+docker exec {CONTAINER} python -m access_niu.train --template /access-niu/access_niu/sample/sample_template.yml
 ```
 Now use this curl command to parse
-```docker exec {CONTAINER} curl -X POST \
+```bash
+docker exec {CONTAINER} curl -X POST \
   http://localhost:8000/parse \
   -F data=@image_leisure_0.jpg
 ```
