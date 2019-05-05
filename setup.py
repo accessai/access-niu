@@ -1,10 +1,24 @@
-from distutils.core import setup
+from setuptools import find_namespace_packages
+from setuptools import setup
 from access_niu.about import __version__, __license__
 
 setup(
     name="access-niu",
+    classifiers=[
+            "Development Status :: 1 Beta",
+            "Intended Audience :: Developers",
+            "License :: OSI Approved :: Apache Software License",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3.6",
+            "Operating System :: OS Independent",
+            "Topic :: Software Development :: Libraries",
+        ],
+    author="ConvexHull Technology Private Limited",
+    author_email="connect@accessai.co",
+    maintainer="Majeed Khan",
+    maintainer_email="majeed.khan@accessai.co",
     version=__version__,
-    packages=["access_niu"],
+    packages= find_namespace_packages(exclude=["sample", "tests"]),
     license=__license__,
     long_description=open("README.md").read(),
     install_requires=[
