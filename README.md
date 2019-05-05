@@ -21,12 +21,12 @@ pip install access-niu
 
 ## Training
 ```bash
-python -m access_niu.train --template sample/sample_template.yml
+python -m access_niu.train --template access_niu/sample/colors/sample_template.yml
 ```
 
 ## Inference
 ```bash
-python -m access_niu.wsgi --project ./sample_project
+python -m access_niu.wsgi --project ./colors
 ```
 Now use this curl command to parse
 ```bash

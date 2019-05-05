@@ -86,8 +86,8 @@ class MobilenetV2ModelComponent(Component):
 
         self.model.fit_generator(
             generator=train_generator,
-            steps_per_epoch=n_samples // batch_size,
-            epochs=epochs,
+            steps_per_epoch=n_samples // batch_size, #TODO: handle case when steps_per_epoch==0
+            epochs=epochs
         )
 
     def persist(self, **kwargs):

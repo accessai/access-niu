@@ -1,9 +1,9 @@
 data:
-  train: '/home/majeed/data/gender/train'
-  test: '/home/majeed/data/gender/test'
+  train: 'access_niu/sample/colors/train'
+  test: '/home/majeed/data/colors/train'
 project:
-  path: output
-batch_size: 24
+  path: 'colors'
+batch_size: 1
 epochs: 2
 pipeline:
   - name: 'mobilenet_v2'
