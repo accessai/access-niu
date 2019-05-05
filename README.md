@@ -26,13 +26,13 @@ python -m access_niu.train --template access_niu/sample/colors/sample_template.y
 
 ## Inference
 ```bash
-python -m access_niu.wsgi --project ./colors
+python -m access_niu.wsgi --project ./output/colors
 ```
 Now use this curl command to parse
 ```bash
 curl -X POST \
   http://localhost:8000/parse \
-  -F data=@image_leisure_0.jpg
+  -F data=@test_image.jpg
 ```
 
 

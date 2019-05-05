@@ -5,7 +5,6 @@ from access_niu.about import __version__, __license__
 setup(
     name="access-niu",
     classifiers=[
-            "Development Status :: 1 Beta",
             "Intended Audience :: Developers",
             "License :: OSI Approved :: Apache Software License",
             "Programming Language :: Python",
