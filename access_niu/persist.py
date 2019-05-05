@@ -2,8 +2,12 @@ import os
 
 import yaml
 
+from access_niu.utility import ensure_directory
+
 
 def save_keras_model(path, model, labels):
+
+    ensure_directory(path)
 
     with open(os.path.join(path, "model.json"), "w") as f:
         f.write(model.to_json())

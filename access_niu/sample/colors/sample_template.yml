@@ -1,8 +1,8 @@
 data:
   train: 'access_niu/sample/colors/train'
-  test: '/home/majeed/data/colors/train'
+  test: 'access_niu/sample/colors/train'
 project:
-  path: 'colors'
+  path: 'output/colors'
 batch_size: 1
 epochs: 2
 pipeline:
