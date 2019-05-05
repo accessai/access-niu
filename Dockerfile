@@ -1,4 +1,4 @@
-FROM wrwrwr/flask-scipy
+FROM python:3.6-slim
 
 ADD . /access-niu
 WORKDIR /access-niu
