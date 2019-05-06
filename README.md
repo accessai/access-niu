@@ -10,7 +10,7 @@ This repository contains application to train models for Image classification an
 - [ ] Support for training regression models
 - [ ] Support of training multi input/output models
 - [ ] Incorporate Bayesian Inference for finding uncertainty in the predictions.
-- [ ] Create Docker Image
+- [x] Create Docker Image
 - [ ] Support for serving the application with gunicorn
 - [ ] Anything else? 
 
@@ -23,6 +23,10 @@ pip install access-niu
 ```bash
 python -m access_niu.train --template access_niu/sample/colors/sample_template.yml
 ```
+Docker:
+```bash
+docker exec {CONTAINER} python -m access_niu.wsgi --project /access-ui/access_ui/sample_project
+```
 
 ## Inference
 ```bash
@@ -34,7 +38,16 @@ curl -X POST \
   http://localhost:8000/parse \
   -F data=@test_image.jpg
 ```
-
+Docker:
+```bash
+docker exec {CONTAINER} python -m access_niu.train --template /access-niu/access_niu/sample/sample_template.yml
+```
+Now use this curl command to parse
+```bash
+docker exec {CONTAINER} curl -X POST \
+  http://localhost:8000/parse \
+  -F data=@image_leisure_0.jpg
+```
 
 ## References
 - This project is inspired from [RASA-NLU](https://github.com/RasaHQ/rasa) project.
