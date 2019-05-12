@@ -1,0 +1,11 @@
+.git
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+output/
+dist/
+.pytest_cache
+access_niu.egg-info
+env
