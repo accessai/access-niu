@@ -1,44 +1,36 @@
-FROM python:3.6 as base
-
-WORKDIR /app
-
-COPY requirements.txt /app
-
-RUN pip install -r requirements.txt
-
-
-# --- Release with Alpine ----
-FROM python:3.6-alpine AS release
-# Create app directory
-WORKDIR /app
-
-COPY --from=base /app/requirements.txt ./
-COPY --from=base /root/.cache /root/.cache
-
-# Install app dependencies
-RUN pip install -r requirements.txt
-COPY --from=base /app/ ./
-#CMD ["gunicorn", "--config", "./gunicorn_app/conf/gunicorn_config.py", "gunicorn_app:app"]
-
-
+FROM python:3.6-slim as builder
+RUN python3 -m venv /venv
 
 #SHELL ["/bin/bash", "-c"]
 
-#RUN apt-get update -qq && \
-#  apt-get install -y --no-install-recommends && \
-#  build-essential  && \
-#  mkdir access-niu
 
-# ADD . /access-niu
-# WORKDIR /access-niu
+RUN apt-get -qy update && apt-get -qy install build-essential && \
+    rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
-# RUN mkdir templates
-#RUN python setup.py sdist
-#RUN pip install dist/access-niu*
+WORKDIR /build
 
-#VOLUME ["templates"]
+# layer caching since dependencies don't change much
+COPY requirements.txt .
+RUN /venv/bin/pip install -r requirements.txt
 
-#EXPOSE 8000
+COPY . /build
+RUN /venv/bin/pip install /build
+
+RUN ls /venv
+RUN pwd
+#RUN pip install --user .
+
+FROM python:3.6-alpine3.9 AS release
+COPY --from=builder /venv /usr/local
+
+WORKDIR /app
+
+
+#ENV PATH=/root/.local/bin:$PATH
+
+VOLUME ["templates"]
+
+EXPOSE 8000
 
 #ENTRYPOINT ["access-niu"]
 

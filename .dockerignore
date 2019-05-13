@@ -8,4 +8,5 @@ output/
 dist/
 .pytest_cache
 access_niu.egg-info
+Dockerfile
 env
