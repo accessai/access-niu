@@ -1,6 +1,6 @@
 data:
-  train: 'access_niu/sample/colors/train'
-  test: 'access_niu/sample/colors/train'
+  train: 'samples/colors/train'
+  test: 'samples/colors/train'
 project:
   path: 'output/colors'
 batch_size: 1

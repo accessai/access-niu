@@ -30,5 +30,6 @@ setup(
         "black",
         "gunicorn==19.9.0",
         "flask==1.0.2",
+        "requests==2.21.0"
     ],
 )
