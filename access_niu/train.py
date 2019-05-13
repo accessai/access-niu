@@ -15,6 +15,7 @@ def _create_parser():
 class Trainer(object):
     """Trainer class
     """
+
     def __init__(self, template):
         self.template = template
         self.pipeline = []
@@ -43,11 +44,13 @@ class Trainer(object):
         for component in self.pipeline:
             component.persist(**kwargs)
 
-        keys_to_delete = [k for k in kwargs.keys() if 'generator' in k]
+        keys_to_delete = [k for k in kwargs.keys() if "generator" in k]
         for k in keys_to_delete:
-                del kwargs[k]
+            del kwargs[k]
 
-        with open(os.path.join(kwargs.get('project').get('path'), 'template.yml'), 'w') as f:
+        with open(
+            os.path.join(kwargs.get("project").get("path"), "template.yml"), "w"
+        ) as f:
             yaml.safe_dump(kwargs, f)
 
 

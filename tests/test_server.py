@@ -8,7 +8,7 @@ def test_flask():
     context = flask_app.app_context()
     context.push()
 
-    resp  = test_client.get('/')
+    resp = test_client.get("/")
 
     assert resp.status_code == 200
     assert resp.json == {"status": "OK"}

@@ -9,9 +9,19 @@ from access_niu.app import NIUApp
 
 def _create_parser():
     parser = argparse.ArgumentParser(description="access-niu parser")
-    parser.add_argument("--project", type=str, required=True, help="Path to trained model.")
-    parser.add_argument("--host", type=str, default='0.0.0.0', required=False, help="Network interface to bind")
-    parser.add_argument("--port", type=int, default=8000, required=False, help="Network port")
+    parser.add_argument(
+        "--project", type=str, required=True, help="Path to trained model."
+    )
+    parser.add_argument(
+        "--host",
+        type=str,
+        default="0.0.0.0",
+        required=False,
+        help="Network interface to bind",
+    )
+    parser.add_argument(
+        "--port", type=int, default=8000, required=False, help="Network port"
+    )
 
     return parser.parse_args()
 
@@ -40,8 +50,7 @@ def train():
 if __name__ == "__main__":
     args = _create_parser()
 
-    with open(os.path.join(args.project, 'template.yml')) as f:
+    with open(os.path.join(args.project, "template.yml")) as f:
         niu_app = NIUApp(yaml.safe_load(f))
 
     flask_app.run(host=args.host, port=args.port, debug=True)
-
