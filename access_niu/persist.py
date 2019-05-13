@@ -15,6 +15,8 @@ def save_keras_model(path, model, labels):
     model.save(os.path.join(path, "model_weights.h5"))
     _save_labels(path, labels)
 
+    return True
+
 
 def _save_labels(path, labels):
 

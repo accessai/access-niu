@@ -60,7 +60,7 @@ class MobilenetV2ModelComponent(Component):
             )
         )
 
-        base_model = MobileNetV2(input_tensor=input_tensor, **pretrained_model)
+        base_model = MobileNetV2(input_tensor=input_tensor, input_shape=(224,224,3), **pretrained_model)
         x = base_model.output
         x = GlobalAveragePooling2D()(x)
         op = Dense(**output_layer)(x)

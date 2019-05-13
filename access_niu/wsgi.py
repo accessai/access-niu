@@ -18,7 +18,7 @@ flask_app = Flask(__name__)
 
 @flask_app.route("/")
 def status():
-    return {"status": "OK"}
+    return jsonify({"status": "OK"})
 
 
 @flask_app.route("/parse", methods=["POST"])
@@ -41,4 +41,3 @@ if __name__ == "__main__":
         niu_app = NIUApp(yaml.safe_load(f))
 
     flask_app.run(host="localhost", port=8000, debug=True)
-
