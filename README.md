@@ -50,15 +50,26 @@ docker build -t access-niu:latest .
 
   Note: You can attach a directory as a volume so that you can supply the templates from outside the docker container.
 ```bash
-docker run -v $(pwd):/access access-niu
-sudo docker run -v $(pwd)/output/tmp:/access access-niu python -m access_niu.train --template templates/colors_template.yml
+# we will use it as root directory for access-niu application
+mkdir accessai
+# copy samples folder
+cp -r samples accessai/
 
+# train the model
+docker run -v $(pwd)/accessai:/accessai access-niu python -m access_niu.train --template samples/colors/template.yml
 ```
+After running the train command you should get an output folder in the accessai directory
+
+Now start the access_niu server
+```bash
+docker -d run -v $(pwd)/accessai:/accessai -p 8000:8000 access-niu --projects output
+```
+
 Now use this curl command to parse
 ```bash
-docker exec {CONTAINER} curl -X POST \
+curl -X POST \
   http://localhost:8000/parse \
-  -F data=@image_leisure_0.jpg
+  -F data=@samples/colors/train/red/1.jpg
 ```
 
 ## References
