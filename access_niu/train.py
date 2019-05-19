@@ -25,6 +25,8 @@ class Trainer(object):
         """
         self.pipeline = build_pipeline(self.template)
 
+        return self
+
     def train(self):
         """Trains the model using the constructed pipeline.
         """
@@ -35,6 +37,8 @@ class Trainer(object):
             result = component.execute(**kwargs)
             if result is not None:
                 kwargs.update(result)
+
+        return self
 
     def persist(self):
         """ Saves the trained model.
@@ -52,6 +56,8 @@ class Trainer(object):
             os.path.join(kwargs.get("project").get("path"), "template.yml"), "w"
         ) as f:
             yaml.safe_dump(kwargs, f)
+
+        return kwargs.get("project").get("name"), kwargs.get("project").get("path")
 
 
 if __name__ == "__main__":

@@ -2,9 +2,10 @@ data:
   train: 'samples/colors/train'
   test: 'samples/colors/train'
 project:
+  name: 'colors'
   path: 'output/colors'
 batch_size: 1
-epochs: 2
+epochs: 5
 pipeline:
   - name: 'mobilenet_v2'
     input_layer:

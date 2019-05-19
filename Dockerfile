@@ -12,10 +12,8 @@ RUN pip install -r requirements.txt
 COPY . .
 RUN python setup.py install
 
-VOLUME ["templates"]
+VOLUME ["access-niu"]
 
 EXPOSE 8000
 
-#ENTRYPOINT ["access_niu"]
-
-CMD ["access_niu help"]
+CMD ["python -m access_niu"]
