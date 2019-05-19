@@ -36,13 +36,23 @@ curl -X POST \
 ```
 
 ## Docker
-Docker:
+
+###Build image
+ - clone the git repo
 ```bash
-docker exec {CONTAINER} python -m access_niu.wsgi --project /access-ui/access_ui/sample_project
+git clone https://github.com/accessai/access-niu.git
 ```
-Docker:
+- Build the docker image
 ```bash
-docker exec {CONTAINER} python -m access_niu.train --template /access-niu/access_niu/sample/sample_template.yml
+docker build -t access-niu:latest .
+```
+- Run the docker container.
+
+  Note: You can attach a directory as a volume so that you can supply the templates from outside the docker container.
+```bash
+docker run -v $(pwd):/access access-niu
+sudo docker run -v $(pwd)/output/tmp:/access access-niu python -m access_niu.train --template templates/colors_template.yml
+
 ```
 Now use this curl command to parse
 ```bash
