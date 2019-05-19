@@ -60,7 +60,9 @@ class MobilenetV2ModelComponent(Component):
             )
         )
 
-        base_model = MobileNetV2(input_tensor=input_tensor, input_shape=(224,224,3), **pretrained_model)
+        base_model = MobileNetV2(
+            input_tensor=input_tensor, input_shape=(224, 224, 3), **pretrained_model
+        )
         x = base_model.output
         x = GlobalAveragePooling2D()(x)
         op = Dense(**output_layer)(x)
@@ -86,8 +88,9 @@ class MobilenetV2ModelComponent(Component):
 
         self.model.fit_generator(
             generator=train_generator,
-            steps_per_epoch=n_samples // batch_size, #TODO: handle case when steps_per_epoch==0
-            epochs=epochs
+            steps_per_epoch=n_samples
+            // batch_size,  # TODO: handle case when steps_per_epoch==0
+            epochs=epochs,
         )
 
     def persist(self, **kwargs):

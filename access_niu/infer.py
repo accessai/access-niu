@@ -1,8 +1,16 @@
 import os
+import argparse
 
 from keras.models import model_from_json
 from keras.models import Model
 import yaml
+
+
+def _create_parser():
+    parser = argparse.ArgumentParser(description="access-niu infer parser")
+    parser.add_argument("--project", type=str, required=True, help="Project directory")
+
+    return parser.parse_args()
 
 
 def load_model(model_dir: str) -> [Model, dict]:

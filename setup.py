@@ -5,19 +5,19 @@ from access_niu.about import __version__, __license__
 setup(
     name="access-niu",
     classifiers=[
-            "Intended Audience :: Developers",
-            "License :: OSI Approved :: Apache Software License",
-            "Programming Language :: Python",
-            "Programming Language :: Python :: 3.6",
-            "Operating System :: OS Independent",
-            "Topic :: Software Development :: Libraries",
-        ],
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.6",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Libraries",
+    ],
     author="ConvexHull Technology Private Limited",
     author_email="connect@accessai.co",
     maintainer="Majeed Khan",
     maintainer_email="majeed.khan@accessai.co",
     version=__version__,
-    packages= find_namespace_packages(exclude=["sample", "tests"]),
+    packages=find_namespace_packages(exclude=["sample", "tests"]),
     license=__license__,
     long_description=open("README.md").read(),
     install_requires=[
@@ -30,6 +30,6 @@ setup(
         "black",
         "gunicorn==19.9.0",
         "flask==1.0.2",
-        "requests==2.21.0"
+        "requests==2.21.0",
     ],
 )

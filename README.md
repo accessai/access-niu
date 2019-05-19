@@ -21,32 +21,55 @@ pip install access-niu
 
 ## Training
 ```bash
-python -m access_niu.train --template access_niu/sample/colors/sample_template.yml
-```
-Docker:
-```bash
-docker exec {CONTAINER} python -m access_niu.wsgi --project /access-ui/access_ui/sample_project
+python -m access_niu.train --template sample/colors/template.yml
 ```
 
 ## Inference
 ```bash
-python -m access_niu.wsgi --project ./output/colors
+python -m access_niu --projects output
 ```
 Now use this curl command to parse
 ```bash
 curl -X POST \
   http://localhost:8000/parse \
-  -F data=@test_image.jpg
+  -F data=@samples/colors/train/red/1.jpg
 ```
-Docker:
+
+## Docker
+
+###Build image
+ - clone the git repo
 ```bash
-docker exec {CONTAINER} python -m access_niu.train --template /access-niu/access_niu/sample/sample_template.yml
+git clone https://github.com/accessai/access-niu.git
 ```
+- Build the docker image
+```bash
+docker build -t access-niu:latest .
+```
+- Run the docker container.
+
+  Note: You can attach a directory as a volume so that you can supply the templates from outside the docker container.
+```bash
+# we will use it as root directory for access-niu application
+mkdir accessai
+# copy samples folder
+cp -r samples accessai/
+
+# train the model
+docker run -v $(pwd)/accessai:/accessai access-niu python -m access_niu.train --template samples/colors/template.yml
+```
+After running the train command you should get an output folder in the accessai directory
+
+Now start the access_niu server
+```bash
+docker -d run -v $(pwd)/accessai:/accessai -p 8000:8000 access-niu --projects output
+```
+
 Now use this curl command to parse
 ```bash
-docker exec {CONTAINER} curl -X POST \
+curl -X POST \
   http://localhost:8000/parse \
-  -F data=@image_leisure_0.jpg
+  -F data=@samples/colors/train/red/1.jpg
 ```
 
 ## References

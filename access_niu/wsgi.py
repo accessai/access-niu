@@ -1,43 +1,48 @@
-import os
-import argparse
+import json
 
 from flask import Flask, request, jsonify
-import yaml
-
-from access_niu.app import NIUApp
-
-
-def _create_parser():
-    parser = argparse.ArgumentParser(description="access-niu parser")
-    parser.add_argument("--project", type=str, required=True, help="Path to trained model.")
-
-    return parser.parse_args()
-
 
 flask_app = Flask(__name__)
+niu_app = None
+
 
 @flask_app.route("/")
 def status():
     return jsonify({"status": "OK"})
 
 
-@flask_app.route("/parse", methods=["POST"])
+@flask_app.route("/parse", methods=["OPTIONS", "POST"])
 def parse():
-    # model = request.form["model"]
-    data = request.files["data"]
-    resp = niu_app.parse(data)
+    img = request.files["data"]
+    project_name = request.form.get("project_name")
+    resp = niu_app.parse(project_name, img)
     return jsonify(resp)
 
 
-@flask_app.route("/train", methods=["POST"])
+@flask_app.route("/train", methods=["OPTIONS", "POST"])
 def train():
-    pass
+
+    # data = json.loads(request.data)
+    # template = data.get('template')
+    # resp = niu_app.train(template)
+    #
+    # return jsonify(resp)
+    return jsonify({"message": "Train method not implemented yet."}), 501
 
 
-if __name__ == "__main__":
-    args = _create_parser()
+@flask_app.route("/load", methods=["OPTIONS", "POST"])
+def load():
+    data = json.loads(request.data)
+    project_name = data.get("project_name")
+    resp = niu_app.load(project_name)
 
-    with open(os.path.join(args.project, 'template.yml')) as f:
-        niu_app = NIUApp(yaml.safe_load(f))
+    return jsonify(resp)
 
-    flask_app.run(host="localhost", port=8000, debug=True)
+
+@flask_app.route("/unload", methods=["OPTIONS", "POST"])
+def unload():
+    data = json.loads(request.data)
+    project_name = data.get("project_name")
+    resp = niu_app.unload(project_name)
+
+    return jsonify(resp)
