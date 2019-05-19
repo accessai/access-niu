@@ -56,21 +56,19 @@ class NIUApp(object):
     def train(self, template):
         # TODO: make it asynchronous, return train id
         trainer = Trainer(template)
-        project_name, saved_path = trainer.start_construction()\
-            .train() \
-            .persist()
+        project_name, saved_path = trainer.start_construction().train().persist()
 
         self._append_to_projects(project_name, NIUApp._read_project(saved_path))
 
         logger.info("Training completed. Model saved at {}".format(saved_path))
-        return {'success': saved_path}
+        return {"success": saved_path}
 
     def load(self, project_name):
         self.projects.get(project_name).load()
 
-        return {'success': project_name}
+        return {"success": project_name}
 
     def unload(self, project_name):
         self.projects.get(project_name).unload()
 
-        return {'success': project_name}
+        return {"success": project_name}

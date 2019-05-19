@@ -3,11 +3,10 @@ from access_niu.utility import read_template
 
 
 class Project(object):
-
     def __init__(self, project_path):
         self.template = read_template(project_path)
         self.model_dir = self.template.get("project").get("path")
-        self.name = self.template.get('project').get('name')
+        self.name = self.template.get("project").get("name")
         self.model, self.labels = None, None
         self.image_size = Project._get_image_dimensions(self.template)
 

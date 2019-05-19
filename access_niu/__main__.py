@@ -8,7 +8,7 @@ from access_niu.app import NIUApp
 def _create_parser():
     parser = argparse.ArgumentParser(description="access-niu parser")
     parser.add_argument(
-        "--projects", type=str, required=False, help="Path to trained model."
+        "--projects", type=str, required=True, help="Path to trained models directory."
     )
     parser.add_argument(
         "--host",
@@ -31,5 +31,5 @@ def main():
     flask_app.run(host=args.host, port=args.port, debug=True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
