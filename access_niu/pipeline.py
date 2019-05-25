@@ -3,10 +3,6 @@ from access_niu.components.component import ComponentManager
 comp_manager = ComponentManager()
 
 
-def _build_component(name, **kwargs):
-    return comp_manager.get(name)(**kwargs)
-
-
 def _get_data_component(template):
     components = []
     input_layer = template.get("pipeline")[0].get("input_layer")
@@ -36,7 +32,12 @@ def build_pipeline(template):
 
     pipeline = _get_data_component(template)
 
-    for comp in template.get("pipeline"):
-        pipeline.append(_build_component(**comp))
+    kwargs = {}
+    for key, comp_kwargs in template.get("pipeline").items():
+        kwargs[key] = comp_kwargs
+        comp = comp_manager.get(key)(**kwargs)
+        kwargs.update(comp.prepare(**kwargs))
+        kwargs.update(comp.build(**kwargs))
+        pipeline.append(comp)
 
     return pipeline

@@ -1,0 +1,23 @@
+data:
+  train: 'samples/colors/train'
+  test: 'samples/colors/train'
+project:
+  name: 'colors'
+  path: 'output/colors'
+pipeline:
+  input_layer:
+    shape: (224,224,3)
+  model_layer:
+    name: 'mobilenet_v2'
+    include_top: false
+    weights: 'imagenet'
+  output_layer:
+    units: 2
+    activation: "softmax"
+train:
+  batch_size: 1
+  epochs: 5
+  optimizer: 'adam'
+  loss: 'categorical_crossentropy'
+  metrics:
+    - 'acc'

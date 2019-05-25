@@ -9,59 +9,32 @@ from keras.models import Model
 from keras.preprocessing import image
 
 from access_niu import persist
-
-
-class Component(object):
-
-    __metaclass__ = ABCMeta
-
-    def __init__(self, **kwargs):
-        self._is_active = (
-            kwargs.get("active") if kwargs.get("active") is not None else True
-        )
-
-    @abc.abstractmethod
-    def name(self):
-        raise NotImplementedError()
-
-    def prepare(self, **kwargs):
-        pass
-
-    @abc.abstractmethod
-    def execute(self, **kwargs):
-        return NotImplementedError()
-
-    def persist(self, **kwargs):
-        pass
-
-    @property
-    def is_active(self):
-        return self._is_active
-
-    @is_active.setter
-    def is_active(self, value):
-        self._is_active = value
+from access_niu.components import Component
 
 
 class MobilenetV2ModelComponent(Component):
     def __init__(self, **kwargs):
         super(MobilenetV2ModelComponent, self).__init__(**kwargs)
+        self.image_width = 224
+        self.image_height = 224
+        self.channels = 3
         self.model = self._build_model(**kwargs)
 
     def name(self):
         return "mobilenet_v2"
 
-    def _build_model(self, input_layer, pretrained_model, output_layer, misc):
-        input_tensor = Input(
-            shape=(
-                input_layer.get("image_height"),
-                input_layer.get("image_width"),
-                input_layer.get("color_channels"),
-            )
-        )
+    def _build_model(self, **kwargs):
+
+        input_layer = kwargs.get('input_layer', {})
+        model_layer = kwargs.get('model')
+        output_layer = kwargs.get('output_layer')
+
+        input_shape = (input_layer.get('image_width', self.image_width),
+                       input_layer.get('image_height', self.image_height),
+                       input_layer.get('channels', self.channels))
 
         base_model = MobileNetV2(
-            input_tensor=input_tensor, input_shape=(224, 224, 3), **pretrained_model
+            input_shape=input_shape, **model_layer
         )
         x = base_model.output
         x = GlobalAveragePooling2D()(x)
@@ -70,14 +43,16 @@ class MobilenetV2ModelComponent(Component):
         for layer in base_model.layers:
             layer.trainable = False
 
-        model = Model(inputs=[input_tensor], outputs=[op])
-        model.compile(
-            optimizer=misc.get("optimizer"),
-            loss=misc.get("loss"),
-            metrics=misc.get("metrics"),
-        )
+        model = Model(inputs=[base_model], outputs=[op])
 
         return model
+
+    def _compile(self, model, train):
+        return model.compile(
+            optimizer=train.get("optimizer"),
+            loss=train.get("loss"),
+            metrics=train.get("metrics"),
+        )
 
     def execute(self, **kwargs):
 
@@ -86,10 +61,11 @@ class MobilenetV2ModelComponent(Component):
         batch_size = kwargs.get("batch_size")
         epochs = kwargs.get("epochs")
 
+        steps = n_samples // batch_size or 1
+
         self.model.fit_generator(
             generator=train_generator,
-            steps_per_epoch=n_samples
-            // batch_size,  # TODO: handle case when steps_per_epoch==0
+            steps_per_epoch=steps,
             epochs=epochs,
         )
 
@@ -137,3 +113,5 @@ class ComponentManager(object):
         self.components["mobilenet"] = MobileNet
         self.components["mobilenet_v2"] = MobilenetV2ModelComponent
         self.components["data_generator"] = DataGeneratorComponent
+        self.components['input_layer'] = Input
+        self.components['output_layer'] = Dense
