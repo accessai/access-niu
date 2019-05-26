@@ -7,13 +7,13 @@ project:
 pipeline:
   input_layer:
     shape: (224,224,3)
+  output_layer:
+    units: 2
+    activation: "softmax"
   model_layer:
     name: 'mobilenet_v2'
     include_top: false
     weights: 'imagenet'
-  output_layer:
-    units: 2
-    activation: "softmax"
 train:
   batch_size: 1
   epochs: 5

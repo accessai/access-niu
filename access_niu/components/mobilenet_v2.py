@@ -18,6 +18,10 @@ class MobilenetV2ModelComponent(Component):
 
         input_layer = kwargs.get('input_layer')
         model_layer = kwargs.get('model_layer')
+
+        if not input_layer:
+            input_layer = Input(shape=self.input_shape)
+
         base_model = MobileNetV2(input_tensor = input_layer,
             **model_layer
         )

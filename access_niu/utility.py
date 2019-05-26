@@ -12,3 +12,7 @@ def read_template(project_path):
         template = yaml.safe_load(f)
 
     return template
+
+def parse_shape(shape):
+    shape = shape.replace(")", "").replace("(","")
+    return tuple([int(e) for e in shape.split(',')])
