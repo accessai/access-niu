@@ -4,22 +4,20 @@ data:
 project:
   name: 'colors'
   path: 'output/colors'
-batch_size: 1
-epochs: 5
 pipeline:
-  - name: 'mobilenet_v2'
-    input_layer:
-      image_height: 224
-      image_width: 224
-      color_channels: 3
-    pretrained_model:
-      include_top: false
-      weights: 'imagenet'
-    output_layer:  # output layer is a classifier / regressor
+  - input_layer:
+      shape: (224,224,3)
+  - output_layer:
       units: 2
       activation: "softmax"
-    misc:
-      optimizer: 'adam'
-      loss: 'categorical_crossentropy'
-      metrics:
-        - 'acc'
+  - model_layer:
+      name: 'mobilenet_v2'
+      include_top: false
+      weights: 'imagenet'
+train:
+  batch_size: 1
+  epochs: 5
+  optimizer: 'adam'
+  loss: 'categorical_crossentropy'
+  metrics:
+    - 'acc'

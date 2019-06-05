@@ -1,6 +1,7 @@
 import os
 import argparse
 import yaml
+from copy import deepcopy
 
 from access_niu.pipeline import build_pipeline
 
@@ -17,6 +18,7 @@ class Trainer(object):
     """
 
     def __init__(self, template):
+        self.orig_template = deepcopy(template)
         self.template = template
         self.pipeline = []
 
@@ -34,8 +36,8 @@ class Trainer(object):
         kwargs = self.template
 
         for component in self.pipeline:
-            result = component.execute(**kwargs)
-            if result is not None:
+            result = component.run(**kwargs)
+            if result is not None and type(result) == dict:
                 kwargs.update(result)
 
         return self
@@ -48,14 +50,10 @@ class Trainer(object):
         for component in self.pipeline:
             component.persist(**kwargs)
 
-        keys_to_delete = [k for k in kwargs.keys() if "generator" in k]
-        for k in keys_to_delete:
-            del kwargs[k]
-
         with open(
             os.path.join(kwargs.get("project").get("path"), "template.yml"), "w"
         ) as f:
-            yaml.safe_dump(kwargs, f)
+            yaml.safe_dump(self.orig_template, f)
 
         return kwargs.get("project").get("name"), kwargs.get("project").get("path")
 

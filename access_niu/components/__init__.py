@@ -38,5 +38,3 @@ class Component(object):
     @is_active.setter
     def is_active(self, value):
         self._is_active = value
-
-

@@ -13,6 +13,7 @@ def read_template(project_path):
 
     return template
 
+
 def parse_shape(shape):
-    shape = shape.replace(")", "").replace("(","")
-    return tuple([int(e) for e in shape.split(',')])
+    shape = shape.replace(")", "").replace("(", "")
+    return tuple([int(e) for e in shape.split(",")])

@@ -9,7 +9,11 @@ from access_niu import utility
 def _create_parser():
     parser = argparse.ArgumentParser(description="access-niu parser")
     parser.add_argument(
-        "--projects", type=str, required=False, default='./projects', help="Path to trained models directory."
+        "--projects",
+        type=str,
+        required=False,
+        default="./projects",
+        help="Path to trained models directory.",
     )
     parser.add_argument(
         "--host",
