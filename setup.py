@@ -24,7 +24,7 @@ setup(
         "keras==2.2.4",
         "numpy==1.16.2",
         "scikit-learn==0.20.3",
-        "tensorflow==1.13.1",
+        "tensorflow==2.7.2",
         "pillow==6.0.0",
         "h5py==2.9.0",
         "black",
