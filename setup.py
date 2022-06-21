@@ -22,7 +22,7 @@ setup(
     long_description=open("README.md").read(),
     install_requires=[
         "keras==2.2.4",
-        "numpy==1.16.2",
+        "numpy==1.22.0",
         "scikit-learn==0.20.3",
         "tensorflow==1.13.1",
         "pillow==6.0.0",
