@@ -25,7 +25,7 @@ setup(
         "numpy==1.16.2",
         "scikit-learn==0.20.3",
         "tensorflow==1.13.1",
-        "pillow==6.0.0",
+        "pillow==9.3.0",
         "h5py==2.9.0",
         "black",
         "gunicorn==19.9.0",
